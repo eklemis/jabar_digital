@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { scopePerRequest } = require("awilix-express");
-const container = require("../../Infrastructures/container");
+const container = require("../container");
 const UserRoutes = require("../../Interfaces/http/api/users/userRoutes");
 const DomainErrorTranslator = require("../../Commons/exceptions/DomainErrorTranslator");
 const ClientError = require("../../Commons/exceptions/ClientError");

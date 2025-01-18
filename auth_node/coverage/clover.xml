@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1737163220326" clover="3.2.0">
-  <project timestamp="1737163220326" name="All files">
+<coverage generated="1737204493428" clover="3.2.0">
+  <project timestamp="1737204493428" name="All files">
     <metrics statements="138" coveredstatements="138" conditionals="25" coveredconditionals="25" methods="30" coveredmethods="29" elements="193" coveredelements="192" complexity="0" loc="138" ncloc="138" packages="8" files="16" classes="16"/>
     <package name="Applications.repositories">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -100,6 +100,32 @@
         <line num="21" count="1" type="stmt"/>
       </file>
     </package>
+    <package name="Infrastructures.http">
+      <metrics statements="20" coveredstatements="20" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="2"/>
+      <file name="createServer.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Infrastructures/http/createServer.js">
+        <metrics statements="20" coveredstatements="20" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+      </file>
+    </package>
     <package name="Infrastructures.repositories">
       <metrics statements="50" coveredstatements="50" conditionals="16" coveredconditionals="16" methods="14" coveredmethods="14"/>
       <file name="InMemoryUserRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Infrastructures/repositories/InMemoryUserRepository.js">
@@ -160,32 +186,6 @@
         <line num="47" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="48" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="54" count="1" type="stmt"/>
-      </file>
-    </package>
-    <package name="Interfaces.http">
-      <metrics statements="20" coveredstatements="20" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="2"/>
-      <file name="createServer.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Interfaces/http/createServer.js">
-        <metrics statements="20" coveredstatements="20" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="2"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="28" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="44" count="1" type="stmt"/>
       </file>
     </package>
     <package name="Interfaces.http.api.users">
