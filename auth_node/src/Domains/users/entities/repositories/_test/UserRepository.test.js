@@ -18,4 +18,12 @@ describe("UserRepository", () => {
       ).rejects.toThrowError("USER_REPOSITORY.METHOD_NOT_IMPLEMENTED");
     });
   });
+
+  describe("getPasswordByNIK", () => {
+    test("should throw an error when invoked without implementation", async () => {
+      await expect(
+        repository.getPasswordByNIK("1234567890123456"),
+      ).rejects.toThrowError("USER_REPOSITORY.METHOD_NOT_IMPLEMENTED");
+    });
+  });
 });

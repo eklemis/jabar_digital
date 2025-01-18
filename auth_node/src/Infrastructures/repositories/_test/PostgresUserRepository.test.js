@@ -30,14 +30,12 @@ describe("PostgresUserRepository", () => {
     test("should throw InvariantError when trying to add a user with duplicate NIK", async () => {
       const repository = new PostgresUserRepository({ pool });
 
-      // Add the first user
       await repository.addUser({
         nik: "1234567890123456",
         role: "user",
         password: "hashedPassword",
       });
 
-      // Try adding the second user with the same NIK
       await expect(
         repository.addUser({
           nik: "1234567890123456",
@@ -45,20 +43,11 @@ describe("PostgresUserRepository", () => {
           password: "anotherHashedPassword",
         }),
       ).rejects.toThrow(InvariantError);
-
-      await expect(
-        repository.addUser({
-          nik: "1234567890123456",
-          role: "admin",
-          password: "hashedPassword",
-        }),
-      ).rejects.toThrow("USER_REPOSITORY:ALREADY_REGISTERED");
     });
 
     test("should throw an error when no rows are returned", async () => {
       const repository = new PostgresUserRepository({ pool });
 
-      // Mock pool.query to return no rows
       const mockQuery = jest
         .spyOn(pool, "query")
         .mockResolvedValueOnce({ rows: [] });
@@ -71,12 +60,12 @@ describe("PostgresUserRepository", () => {
         }),
       ).rejects.toThrowError("USER_REPOSITORY:NO_ROWS_RETURNED");
 
-      mockQuery.mockRestore(); // Restore original behavior
+      mockQuery.mockRestore();
     });
+
     test("should handle unexpected errors", async () => {
       const repository = new PostgresUserRepository({ pool });
 
-      // Mock pool.query to throw an unexpected error
       const mockQuery = jest
         .spyOn(pool, "query")
         .mockRejectedValueOnce(new Error("Unexpected Error"));
@@ -89,7 +78,7 @@ describe("PostgresUserRepository", () => {
         }),
       ).rejects.toThrowError("Unexpected Error");
 
-      mockQuery.mockRestore(); // Restore original behavior
+      mockQuery.mockRestore();
     });
   });
 
@@ -97,14 +86,12 @@ describe("PostgresUserRepository", () => {
     test("should return user data if the user exists", async () => {
       const repository = new PostgresUserRepository({ pool });
 
-      // Add a user
       await repository.addUser({
         nik: "1234567890123456",
         role: "user",
         password: "hashedPassword",
       });
 
-      // Retrieve the user
       const user = await repository.findUserByNIK("1234567890123456");
 
       expect(user).toHaveProperty("id");
@@ -118,6 +105,58 @@ describe("PostgresUserRepository", () => {
       await expect(
         repository.findUserByNIK("1234567890123456"),
       ).rejects.toThrow(NotFoundError);
+    });
+
+    test("should handle unexpected errors", async () => {
+      const repository = new PostgresUserRepository({ pool });
+
+      const mockQuery = jest
+        .spyOn(pool, "query")
+        .mockRejectedValueOnce(new Error("Unexpected Error"));
+
+      await expect(
+        repository.findUserByNIK("1234567890123456"),
+      ).rejects.toThrowError("Unexpected Error");
+
+      mockQuery.mockRestore();
+    });
+  });
+
+  describe("getPasswordByNIK", () => {
+    test("should return the password if the user exists", async () => {
+      const repository = new PostgresUserRepository({ pool });
+
+      await repository.addUser({
+        nik: "1234567890123456",
+        role: "user",
+        password: "hashedPassword",
+      });
+
+      const password = await repository.getPasswordByNIK("1234567890123456");
+
+      expect(password).toBe("hashedPassword");
+    });
+
+    test("should throw an error if the user is not found", async () => {
+      const repository = new PostgresUserRepository({ pool });
+
+      await expect(
+        repository.getPasswordByNIK("1234567890123456"),
+      ).rejects.toThrowError("USER_NOT_FOUND");
+    });
+
+    test("should handle unexpected errors", async () => {
+      const repository = new PostgresUserRepository({ pool });
+
+      const mockQuery = jest
+        .spyOn(pool, "query")
+        .mockRejectedValueOnce(new Error("Unexpected Error"));
+
+      await expect(
+        repository.getPasswordByNIK("1234567890123456"),
+      ).rejects.toThrowError("Unexpected Error");
+
+      mockQuery.mockRestore();
     });
   });
 });

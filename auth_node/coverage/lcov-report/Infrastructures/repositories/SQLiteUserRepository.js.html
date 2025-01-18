@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">19.04% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>4/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>4/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -123,9 +123,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,35 +136,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,10 +176,10 @@ const UserRepository = require("../../Applications/repositories/UserRepository")
 const sqlite3 = require("sqlite3").verbose();
 &nbsp;
 class SQLiteUserRepository extends UserRepository {
-  constructor(databaseFile) {
-    super();
-    this._db = new sqlite3.Database(databaseFile);
-    this._db.run(`
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(databaseFile) {
+<span class="cstat-no" title="statement not covered" >    super();</span>
+<span class="cstat-no" title="statement not covered" >    this._db = new sqlite3.Database(databaseFile);</span>
+<span class="cstat-no" title="statement not covered" >    this._db.run(`</span>
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nik TEXT NOT NULL UNIQUE,
@@ -189,36 +189,36 @@ class SQLiteUserRepository extends UserRepository {
     `);
   }
 &nbsp;
-  async addUser({ nik, role, password }) {
-    return new Promise((resolve, reject) =&gt; {
-      const query = `
+<span class="fstat-no" title="function not covered" >  as</span>ync addUser({ nik, role, password }) {
+<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+      const query = <span class="cstat-no" title="statement not covered" >`</span>
         INSERT INTO users (nik, role, password)
         VALUES (?, ?, ?)
       `;
-      this._db.run(query, [nik, role, password], function (err) {
-        if (err) {
-          if (err.message.includes("UNIQUE constraint failed: users.nik")) {
-            return reject(
+<span class="cstat-no" title="statement not covered" >      this._db.run(query, [nik, role, password], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
+<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+<span class="cstat-no" title="statement not covered" >          if (err.message.includes("UNIQUE constraint failed: users.nik")) {</span>
+<span class="cstat-no" title="statement not covered" >            return reject(</span>
               new InvariantError("USER_REPOSITORY:ALREADY_REGISTERED"),
             );
           }
-          return reject(err);
+<span class="cstat-no" title="statement not covered" >          return reject(err);</span>
         }
-        resolve({ id: this.lastID, nik, role, password });
+<span class="cstat-no" title="statement not covered" >        resolve({ id: this.lastID, nik, role, password });</span>
       });
     });
   }
 &nbsp;
-  async findUserByNIK(nik) {
-    return new Promise((resolve, reject) =&gt; {
-      const query = `
+<span class="fstat-no" title="function not covered" >  as</span>ync findUserByNIK(nik) {
+<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+      const query = <span class="cstat-no" title="statement not covered" >`</span>
         SELECT id, nik, role, password
         FROM users
         WHERE nik = ?
       `;
-      this._db.get(query, [nik], (err, row) =&gt; {
-        if (err) return reject(err);
-        resolve(row || null);
+<span class="cstat-no" title="statement not covered" >      this._db.get(query, [nik], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        if (err) <span class="cstat-no" title="statement not covered" >return reject(err);</span></span>
+<span class="cstat-no" title="statement not covered" >        resolve(row || null);</span>
       });
     });
   }
@@ -232,7 +232,7 @@ module.exports = SQLiteUserRepository;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-18T12:48:13.409Z
+                at 2025-01-18T14:43:21.562Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -18,9 +18,6 @@ const createServer = () => {
   // Register routes
   app.use("/users", UserRoutes);
 
-  // Example default route
-  app.get("/", (req, res) => res.send({ value: "Hello World!" }));
-
   // Error-handling middleware
   app.use((err, req, res, next) => {
     const translatedError = DomainErrorTranslator.translate(err);

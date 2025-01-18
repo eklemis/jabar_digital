@@ -1,5 +1,5 @@
 const InvariantError = require("../../Commons/exceptions/InvariantError");
-const UserRepository = require("../../Applications/repositories/UserRepository");
+const UserRepository = require("../../Domains/users/entities/repositories/UserRepository");
 const sqlite3 = require("sqlite3").verbose();
 
 class SQLiteUserRepository extends UserRepository {

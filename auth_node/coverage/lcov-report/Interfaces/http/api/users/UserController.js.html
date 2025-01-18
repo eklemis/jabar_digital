@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">6.25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>1/16</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">6.25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>1/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -81,37 +81,79 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">class UserController {
-  constructor({ addUserUseCase }) {
-    this._addUserUseCase = addUserUseCase;
+<span class="fstat-no" title="function not covered" >  co</span>nstructor({ addUserUseCase, loginUserUseCase }) {
+<span class="cstat-no" title="statement not covered" >    this._addUserUseCase = addUserUseCase;</span>
+<span class="cstat-no" title="statement not covered" >    this._loginUserUseCase = loginUserUseCase;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.register = this.register.bind(this);</span>
+<span class="cstat-no" title="statement not covered" >    this.login = this.login.bind(this);</span>
   }
 &nbsp;
-  async register(req, res, next) {
-    try {
-      const { nik, role } = req.body;
-      const user = await this._addUserUseCase.execute({ nik, role });
-      res.status(201).json(user);
+<span class="fstat-no" title="function not covered" >  as</span>ync register(req, res, next) {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      const { nik, role } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+      const user = <span class="cstat-no" title="statement not covered" >await this._addUserUseCase.execute({ nik, role });</span>
+<span class="cstat-no" title="statement not covered" >      res.status(201).json(user);</span>
     } catch (error) {
-      console.error("Error in UserController.register:", error);
-      next(error);
+<span class="cstat-no" title="statement not covered" >      console.error("Error in UserController.register:", error);</span>
+<span class="cstat-no" title="statement not covered" >      next(error);</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync login(req, res, next) {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      const { nik, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+      const user = <span class="cstat-no" title="statement not covered" >await this._loginUserUseCase.execute({ nik, password });</span>
+<span class="cstat-no" title="statement not covered" >      res.status(200).json(user);</span>
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      next(error);</span>
     }
   }
 }
@@ -124,7 +166,7 @@ module.exports = UserController;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-18T12:48:13.409Z
+                at 2025-01-18T14:43:21.562Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

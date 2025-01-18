@@ -1,4 +1,4 @@
-const UserRepository = require("../../Applications/repositories/UserRepository");
+const UserRepository = require("../../Domains/users/entities/repositories/UserRepository");
 
 class InMemoryUserRepository extends UserRepository {
   constructor() {

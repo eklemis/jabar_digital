@@ -16,6 +16,9 @@ class UserRepository {
   async findUserByNIK(NIK) {
     throw new Error("USER_REPOSITORY.METHOD_NOT_IMPLEMENTED");
   }
+  async getPasswordByNIK(nik) {
+    throw new Error("USER_REPOSITORY.METHOD_NOT_IMPLEMENTED");
+  }
 }
 
 module.exports = UserRepository;
