@@ -5,6 +5,9 @@ const container = require("../container");
 const UserRoutes = require("../../Interfaces/http/api/users/userRoutes");
 const DomainErrorTranslator = require("../../Commons/exceptions/DomainErrorTranslator");
 const ClientError = require("../../Commons/exceptions/ClientError");
+// Swagger for Interactive Documentation
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("../../Interfaces/http/swagger/swaggerConfig");
 
 const createServer = () => {
   const app = express();
@@ -17,6 +20,9 @@ const createServer = () => {
 
   // Register routes
   app.use("/users", UserRoutes);
+
+  // Register Swagger documentation
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // Error-handling middleware
   app.use((err, req, res, next) => {

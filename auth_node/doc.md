@@ -23,7 +23,10 @@ ALTER DATABASE "user-auth_test" OWNER TO developer;
 run command `npm install`
 
 ## Migrate Postgres Database
-run command `npm run migrate up`
+### Run miration for production database
+`npm run migrate up`
+### Run migration for test database
+`npm run migrate:test up`
 
 ## Run All Test
 run command `npm test`

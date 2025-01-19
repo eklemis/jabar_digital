@@ -1,193 +1,180 @@
-# Authentication API
+# User Authentication API
 
-This project is an authentication API built using **Node.js**, **Express**, and follows the principles of **Clean Architecture**.
+This project is a Node.js-based authentication API implementing Clean Architecture principles and built using Test-Driven Development (TDD). The API provides user registration, login, and access to private claims using JWT authentication.
 
-## Table of Contents
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Running Tests](#running-tests)
-- [Project Principles](#project-principles)
-- [Contributing](#contributing)
-- [License](#license)
-
----
+## Features
+- **User Registration**: Register new users with a unique NIK and role.
+- **User Login**: Authenticate users with NIK and password to receive JWT tokens.
+- **Private Claims**: Retrieve user claims using JWT authentication.
+- **PostgreSQL Database**: Data persistence with secure user password hashing.
+- **Comprehensive Testing**: Built with TDD, achieving high test coverage.
+- **Docker Support**: Easily containerized for deployment.
+- **Swagger API Documentation**: Interactive documentation available via `/doc` route.
 
 ## Project Structure
-
 ```
-auth_node/
-│-- config/
-│   ├── database/
-│   │   ├── test.json
-│-- migrations/
-│   ├── 1736980518985_create-users-table.js
-│   ├── 1736983471064_rename-NIK-to-nik.js
-│   ├── 1737211700204_create-authentications-table.js
-│-- src/
-│   ├── Applications/           # Application use cases
-│   ├── Commons/                # Common utilities and exceptions
-│   ├── Domains/                 # Domain entities and repositories
-│   │   ├── authentications/
-│   │   ├── users/
-│   ├── Infrastructures/         # Implementation of repositories, security, and server setup
-│   │   ├── database/postgres/
-│   │   ├── http/
-│   │   ├── repositories/
-│   │   ├── security/
-│-- tests/
-│   ├── AuthenticationsTableTestHelper.js
-│   ├── UsersTableTestHelper.js
-│   ├── sqliteUsersTableHelper.js
-│-- package.json
-│-- README.md
-```
-
----
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd auth_node
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Set up environment variables:
-   Create a `.env` file in the root directory and configure the following:
-   ```env
-   ACCESS_TOKEN_KEY=your_secret_key
-   REFRESH_TOKEN_KEY=your_refresh_secret_key
-   DB_HOST=localhost
-   DB_USER=your_user
-   DB_PASS=your_password
-   DB_NAME=your_database
-   ```
-
----
-
-## Configuration
-
-- Database configuration files are located in `config/database/`
-- Migrations can be run using `npm run migrate`
-
----
-
-## Usage
-
-To start the server:
-```bash
-npm start
+/auth_node
+│-- src
+│   ├── Applications
+│   │   ├── use_cases
+│   │   └── security
+│   ├── Commons
+│   │   ├── exceptions
+│   │   └── utils
+│   ├── Domains
+│   │   ├── users
+│   │   └── authentications
+│   ├── Infrastructures
+│   │   ├── database
+│   │   ├── http
+│   │   ├── repositories
+│   │   └── security
+│   ├── Interfaces
+│   │   ├── http
+│   │   │   └── api
+│   │   └── middlewares
+│   ├── server.js
+│   └── container.js
+├── tests
+├── migrations
+├── .env
+├── Dockerfile
+├── package.json
+└── README.md
 ```
 
-To start the development server with nodemon:
-```bash
-npm run dev
+## Clean Architecture Approach
+This project follows Clean Architecture principles to ensure scalability, maintainability, and testability. It is structured into distinct layers:
+
+1. **Domains**: Contains core business rules and entities.
+2. **Applications**: Contains use cases that implement business rules.
+3. **Infrastructures**: Handles database access, security, and external integrations.
+4. **Interfaces**: Manages API routes, controllers, and middleware.
+
+Each layer follows the dependency rule, ensuring higher-level policies do not depend on lower-level details.
+
+## Importance of Test-Driven Development (TDD)
+TDD was employed to develop this project, which ensures:
+
+- **Better Code Quality**: By writing tests first, the code is structured to meet specific requirements and reduce errors.
+- **Refactoring Confidence**: Developers can safely refactor code with a comprehensive test suite.
+- **Improved Collaboration**: Easier understanding of features via well-defined tests.
+- **Reduced Debugging Time**: Faster identification and resolution of issues.
+
+## Prerequisites
+Ensure you have the following installed:
+- Node.js (>=16.x)
+- PostgreSQL
+- Docker (optional)
+- Postman (for API testing)
+
+## Database Creation
+### Login to Postgres:
+```
+psql -U postgres
 ```
 
----
+### Create databases for production and test as well as new user
+**Create Databases**
+```
+CREATE DATABASE "user-auth";
+CREATE DATABASE "user-auth_test";
+```
 
-## API Endpoints
+**Create User**
+```
+CREATE USER developer WITH PASSWORD 'supersecretpassword';
+```
 
-### 1. Register a new user
-- **POST** `/users/register`
-- **Body:**
-  ```json
-  {
-    "nik": "1234567890123456",
-    "role": "user"
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "id": 1,
-    "nik": "1234567890123456",
-    "role": "user",
-    "password": "random_generated_password"
-  }
-  ```
+**Grant Ownership to the developer User**
+```
+ALTER DATABASE "user-auth" OWNER TO developer;
+ALTER DATABASE "user-auth_test" OWNER TO developer;
+```
 
-### 2. Login user
-- **POST** `/users/login`
-- **Body:**
-  ```json
-  {
-    "nik": "1234567890123456",
-    "password": "password"
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "id": 1,
-    "nik": "1234567890123456",
-    "role": "user",
-    "accessToken": "jwt_token"
-  }
-  ```
+## Install dependencies
+```
+npm install
+```
 
-### 3. Get user claims
-- **GET** `/users/private/claims`
-- **Headers:**
-  ```json
-  {
-    "Authorization": "Bearer jwt_token"
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "status": "success",
-    "data": {
-      "id": 1,
-      "nik": "1234567890123456",
-      "role": "user"
-    }
-  }
-  ```
+## Migrate Postgres Database
+### Run migration for production database
+```
+npm run migrate up
+```
 
----
+### Run migration for test database
+```
+npm run migrate:test up
+```
 
-## Running Tests
-
-Run tests using:
-```bash
+## Run All Tests
+```
 npm test
 ```
 
-To run tests for specific functionality:
-```bash
-npm test -- -t "test description"
+## Run Application
+```
+npm start
 ```
 
----
+## Try the API via Postman
+1. Ensure Postman is installed.
+2. Import the provided Postman collection.
+3. Run the test cases to verify API functionality.
 
-## Project Principles
+## Interactive Swagger OpenAPI Documentation
+Access the API documentation via the `/doc` route once the server is running.
 
-This project follows **Clean Architecture**, which promotes separation of concerns through the following layers:
-1. **Domains:** Core business logic and rules.
-2. **Applications:** Use cases that interact with the domain.
-3. **Infrastructures:** Implementations of database repositories and security modules.
-4. **Interfaces:** HTTP controllers and routes.
+## Running the API with Docker
+1. Build the Docker image:
+   ```
+   docker build -t auth-node .
+   ```
+2. Run the container:
+   ```
+   docker run -p 3000:3000 auth-node
+   ```
 
----
+## API Endpoints
+| Method | Endpoint               | Description               |
+|--------|------------------------|---------------------------|
+| POST   | /users/register         | Register a new user       |
+| POST   | /users/login            | Login and get JWT tokens  |
+| GET    | /users/private/claims    | Retrieve user claims      |
 
-## Contributing
+## Environment Variables
+Set up a `.env` file in the root directory with the following variables:
+```
+# HTTP SERVER
+HOST=localhost
+PORT=3000
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature-xyz`)
-3. Commit changes (`git commit -m 'Add feature xyz'`)
-4. Push to the branch (`git push origin feature-xyz`)
-5. Open a Pull Request
+# TOKENIZE
+ACCESS_TOKEN_KEY=youraccesstokenkey
+REFRESH_TOKEN_KEY=yourrefreshtokenkey
+ACCCESS_TOKEN_AGE=3000
 
----
+# POSTGRES
+PGHOST=localhost
+PGUSER=developer
+PGDATABASE=user-auth
+PGPASSWORD=supersecretpassword
+PGPORT=5432
+
+# POSTGRES TEST
+PGHOST_TEST=localhost
+PGUSER_TEST=developer
+PGDATABASE_TEST=user-auth_test
+PGPASSWORD_TEST=supersecretpassword
+PGPORT_TEST=5432
+
+```
+
+## Troubleshooting
+- Ensure PostgreSQL is running.
+- Check `.env` variables are correctly set.
+- Review logs in case of errors: `npm run start:dev`.
 
 ## License
-
-This project is licensed under the MIT License. See `LICENSE` for details.
+This project is licensed under the MIT License.
