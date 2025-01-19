@@ -1,4 +1,4 @@
-const AuthenticationRepository = require("../../Domains/authentications/entities/repositories/AuthenticationRepository");
+const AuthenticationRepository = require("../../Domains/authentications/repositories/AuthenticationRepository");
 
 class PostgresAuthenticationRepository extends AuthenticationRepository {
   constructor(pool) {

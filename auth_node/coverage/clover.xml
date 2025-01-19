@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1737217983403" clover="3.2.0">
-  <project timestamp="1737217983403" name="All files">
-    <metrics statements="260" coveredstatements="260" conditionals="62" coveredconditionals="62" methods="62" coveredmethods="62" elements="384" coveredelements="384" complexity="0" loc="260" ncloc="260" packages="14" files="26" classes="26"/>
+<coverage generated="1737253967039" clover="3.2.0">
+  <project timestamp="1737253967039" name="All files">
+    <metrics statements="231" coveredstatements="231" conditionals="52" coveredconditionals="52" methods="51" coveredmethods="51" elements="334" coveredelements="334" complexity="0" loc="231" ncloc="231" packages="14" files="24" classes="24"/>
     <package name="src.Applications.security">
       <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
       <file name="AuthenticationTokenManager.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Applications/security/AuthenticationTokenManager.js">
@@ -71,12 +71,12 @@
       </file>
       <file name="ClientError.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Commons/exceptions/ClientError.js">
         <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
-        <line num="3" count="18" type="stmt"/>
-        <line num="5" count="18" type="cond" truecount="2" falsecount="0"/>
+        <line num="3" count="17" type="stmt"/>
+        <line num="5" count="17" type="cond" truecount="2" falsecount="0"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="9" count="17" type="stmt"/>
-        <line num="10" count="17" type="stmt"/>
-        <line num="14" count="11" type="stmt"/>
+        <line num="9" count="16" type="stmt"/>
+        <line num="10" count="16" type="stmt"/>
+        <line num="14" count="10" type="stmt"/>
       </file>
       <file name="DomainErrorTranslator.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Commons/exceptions/DomainErrorTranslator.js">
         <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
@@ -90,10 +90,10 @@
       </file>
       <file name="InvariantError.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Commons/exceptions/InvariantError.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="6" type="stmt"/>
-        <line num="5" count="12" type="stmt"/>
-        <line num="6" count="12" type="stmt"/>
-        <line num="10" count="6" type="stmt"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
       </file>
       <file name="NotFoundError.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Commons/exceptions/NotFoundError.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
@@ -131,9 +131,9 @@
         <line num="30" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="src.Domains.authentications.entities.repositories">
+    <package name="src.Domains.authentications.repositories">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-      <file name="AuthenticationRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Domains/authentications/entities/repositories/AuthenticationRepository.js">
+      <file name="AuthenticationRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Domains/authentications/repositories/AuthenticationRepository.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="3" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
@@ -156,14 +156,14 @@
         <line num="20" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="src.Domains.users.entities.repositories">
+    <package name="src.Domains.users.repositories">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-      <file name="UserRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Domains/users/entities/repositories/UserRepository.js">
+      <file name="UserRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Domains/users/repositories/UserRepository.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="8" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
-        <line num="24" count="5" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.Infrastructures">
@@ -209,19 +209,7 @@
       </file>
     </package>
     <package name="src.Infrastructures.repositories">
-      <metrics statements="74" coveredstatements="74" conditionals="18" coveredconditionals="18" methods="19" coveredmethods="19"/>
-      <file name="InMemoryUserRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Infrastructures/repositories/InMemoryUserRepository.js">
-        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="5" count="4" type="stmt"/>
-        <line num="6" count="4" type="stmt"/>
-        <line num="10" count="4" type="stmt"/>
-        <line num="11" count="4" type="stmt"/>
-        <line num="12" count="4" type="stmt"/>
-        <line num="13" count="4" type="stmt"/>
-        <line num="17" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="21" count="1" type="stmt"/>
-      </file>
+      <metrics statements="45" coveredstatements="45" conditionals="8" coveredconditionals="8" methods="8" coveredmethods="8"/>
       <file name="PostgresAuthenticationRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Infrastructures/repositories/PostgresAuthenticationRepository.js">
         <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="1" count="2" type="stmt"/>
@@ -272,29 +260,6 @@
         <line num="65" count="1" type="stmt"/>
         <line num="68" count="1" type="stmt"/>
         <line num="72" count="2" type="stmt"/>
-      </file>
-      <file name="SQLiteUserRepository.js" path="/Users/ek_solution/BASE/CODES/projects/jabar_digital/auth_node/src/Infrastructures/repositories/SQLiteUserRepository.js">
-        <metrics statements="20" coveredstatements="20" conditionals="8" coveredconditionals="8" methods="7" coveredmethods="7"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="20" count="5" type="stmt"/>
-        <line num="21" count="5" type="stmt"/>
-        <line num="25" count="5" type="stmt"/>
-        <line num="26" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="27" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="34" count="3" type="stmt"/>
-        <line num="40" count="3" type="stmt"/>
-        <line num="41" count="3" type="stmt"/>
-        <line num="46" count="3" type="stmt"/>
-        <line num="47" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="48" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="54" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.Infrastructures.security">
