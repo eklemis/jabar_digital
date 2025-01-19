@@ -13,7 +13,7 @@ class JwtTokenManager extends AuthenticationTokenManager {
 
   async createAccessToken(payload) {
     return this._jwt.sign(payload, process.env.ACCESS_TOKEN_KEY, {
-      expiresIn: "1h",
+      expiresIn: process.env.ACCCESS_TOKEN_AGE || "1h",
     });
   }
 
