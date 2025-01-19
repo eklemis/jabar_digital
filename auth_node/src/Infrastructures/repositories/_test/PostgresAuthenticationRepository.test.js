@@ -6,7 +6,7 @@ describe("PostgresAuthenticationRepository", () => {
   let repository;
 
   beforeEach(() => {
-    repository = new PostgresAuthenticationRepository(pool);
+    repository = new PostgresAuthenticationRepository({ pool });
   });
 
   afterEach(async () => {

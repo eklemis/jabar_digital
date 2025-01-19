@@ -7,7 +7,7 @@ describe("LoginUserUseCase", () => {
       getPasswordByNIK: jest.fn(() => Promise.resolve("hashedPassword")), // Mock the method
       getUserByNIK: jest.fn(() =>
         Promise.resolve({
-          id: "user-123",
+          id: 123,
           nik: "1234567890123456",
           role: "user",
         }),
@@ -52,7 +52,7 @@ describe("LoginUserUseCase", () => {
     expect(
       mockAuthenticationTokenManager.createAccessToken,
     ).toHaveBeenCalledWith({
-      id: "user-123",
+      id: 123,
       nik: "1234567890123456",
       role: "user",
     });
@@ -60,7 +60,7 @@ describe("LoginUserUseCase", () => {
       "refreshToken",
     );
     expect(result).toEqual({
-      id: "user-123",
+      id: 123,
       nik: "1234567890123456",
       role: "user",
       accessToken: "accessToken",

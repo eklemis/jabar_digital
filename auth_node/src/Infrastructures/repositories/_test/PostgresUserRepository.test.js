@@ -58,7 +58,7 @@ describe("PostgresUserRepository", () => {
           role: "user",
           password: "hashedPassword",
         }),
-      ).rejects.toThrowError("USER_REPOSITORY:NO_ROWS_RETURNED");
+      ).rejects.toThrowError("Failed to Add New User");
 
       mockQuery.mockRestore();
     });
@@ -82,7 +82,7 @@ describe("PostgresUserRepository", () => {
     });
   });
 
-  describe("findUserByNIK", () => {
+  describe("getUserByNIK", () => {
     test("should return user data if the user exists", async () => {
       const repository = new PostgresUserRepository({ pool });
 
@@ -92,7 +92,7 @@ describe("PostgresUserRepository", () => {
         password: "hashedPassword",
       });
 
-      const user = await repository.findUserByNIK("1234567890123456");
+      const user = await repository.getUserByNIK("1234567890123456");
 
       expect(user).toHaveProperty("id");
       expect(user.nik).toBe("1234567890123456");
@@ -102,9 +102,9 @@ describe("PostgresUserRepository", () => {
     test("should throw NotFoundError if the user is not found", async () => {
       const repository = new PostgresUserRepository({ pool });
 
-      await expect(
-        repository.findUserByNIK("1234567890123456"),
-      ).rejects.toThrow(NotFoundError);
+      await expect(repository.getUserByNIK("1234567890123456")).rejects.toThrow(
+        NotFoundError,
+      );
     });
 
     test("should handle unexpected errors", async () => {
@@ -115,7 +115,7 @@ describe("PostgresUserRepository", () => {
         .mockRejectedValueOnce(new Error("Unexpected Error"));
 
       await expect(
-        repository.findUserByNIK("1234567890123456"),
+        repository.getUserByNIK("1234567890123456"),
       ).rejects.toThrowError("Unexpected Error");
 
       mockQuery.mockRestore();
@@ -142,7 +142,7 @@ describe("PostgresUserRepository", () => {
 
       await expect(
         repository.getPasswordByNIK("1234567890123456"),
-      ).rejects.toThrowError("USER_NOT_FOUND");
+      ).rejects.toThrowError("User Not Exist");
     });
 
     test("should handle unexpected errors", async () => {

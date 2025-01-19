@@ -1,5 +1,6 @@
 const NotFoundError = require("../../Commons/exceptions/NotFoundError");
 const InvariantError = require("../../Commons/exceptions/InvariantError");
+const AuthenticationError = require("../../Commons/exceptions/AuthenticationError");
 const UserRepository = require("../../Domains/users/repositories/UserRepository");
 
 class PostgresUserRepository extends UserRepository {
@@ -22,19 +23,19 @@ class PostgresUserRepository extends UserRepository {
       const result = await this._pool.query(sqlQuery);
 
       if (!result.rows.length) {
-        throw new Error("USER_REPOSITORY:NO_ROWS_RETURNED");
+        throw new Error("Failed to Add New User");
       }
 
       return result.rows[0];
     } catch (error) {
       if (error.constraint === "users_NIK_key") {
-        throw new InvariantError("USER_REPOSITORY:ALREADY_REGISTERED");
+        throw new InvariantError("User Already Registered");
       }
       throw error;
     }
   }
 
-  async findUserByNIK(nik) {
+  async getUserByNIK(nik) {
     const sqlQuery = {
       // Renamed from `query` to `sqlQuery`
       text: `
@@ -48,7 +49,7 @@ class PostgresUserRepository extends UserRepository {
     const result = await this._pool.query(sqlQuery);
 
     if (!result.rows.length) {
-      throw new NotFoundError("USER_REPOSITORY:NOT_FOUND");
+      throw new NotFoundError("User Not Found");
     }
 
     return result.rows[0];
@@ -62,7 +63,7 @@ class PostgresUserRepository extends UserRepository {
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new Error("USER_NOT_FOUND");
+      throw new AuthenticationError("User Not Exist");
     }
 
     return result.rows[0].password;

@@ -13,7 +13,22 @@ DomainErrorTranslator._directories = {
     "Invalid NIK format",
   ),
   "USER_REPOSITORY:ALREADY_REGISTERED": new InvariantError(
-    "User with this NIK already exists",
+    "User with the provided NIK already exists",
+  ),
+  "ADD_USER_USECASE:MISSING_PROPERTY": new InvariantError(
+    "Missing required property",
+  ),
+  "USER_ENTITY:NOT_CONTAIN_NEEDED_PROPERTY": new InvariantError(
+    "Missing required property",
+  ),
+  "NEW_AUTHENTICATION:NOT_CONTAIN_NEEDED_PROPERTY": new InvariantError(
+    "Missing required property",
+  ),
+  "NEW_AUTHENTICATION:NOT_MEET_DATA_TYPE_SPECIFICATION": new InvariantError(
+    "Missing required property",
+  ),
+  "USER_ENTITY:NOT_MEET_DATA_TYPE_SPECIFICATION": new InvariantError(
+    "Invalid NIK or Password",
   ),
 };
 

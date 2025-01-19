@@ -16,15 +16,16 @@ class LoginUserUseCase {
 
   async execute(useCasePayload) {
     const { nik, password } = new UserLogin(useCasePayload);
-
     // Fetch hashed password by NIK
     const encryptedPassword = await this._userRepository.getPasswordByNIK(nik);
+    //console.log("Encrypted password:", encryptedPassword);
 
     // Verify password
     await this._passwordHash.comparePassword(password, encryptedPassword);
 
     // Fetch user ID and role
     const { id, role } = await this._userRepository.getUserByNIK(nik);
+    //console.log("retrieved=> id:", id, "role:", role);
 
     // Generate access and refresh tokens
     const accessToken =
@@ -39,7 +40,6 @@ class LoginUserUseCase {
         nik,
         role,
       });
-
     // Save refresh token to authentication repository
     await this._authenticationRepository.addToken(refreshToken);
 

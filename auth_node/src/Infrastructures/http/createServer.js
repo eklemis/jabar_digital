@@ -28,6 +28,7 @@ const createServer = () => {
         message: translatedError.message,
       });
     }
+    console.error(err);
 
     res.status(500).json({
       status: "error",

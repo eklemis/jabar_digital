@@ -12,7 +12,9 @@ describe("DomainErrorTranslator", () => {
       DomainErrorTranslator.translate(
         new Error("USER_REPOSITORY:ALREADY_REGISTERED"),
       ),
-    ).toStrictEqual(new InvariantError("User with this NIK already exists"));
+    ).toStrictEqual(
+      new InvariantError("User with the provided NIK already exists"),
+    );
   });
 
   it("should return original error when error message is not needed to translate", () => {

@@ -1,7 +1,7 @@
 const AuthenticationRepository = require("../../Domains/authentications/repositories/AuthenticationRepository");
 
 class PostgresAuthenticationRepository extends AuthenticationRepository {
-  constructor(pool) {
+  constructor({ pool }) {
     super();
     this._pool = pool;
   }
@@ -15,7 +15,7 @@ class PostgresAuthenticationRepository extends AuthenticationRepository {
     try {
       await this._pool.query(query);
     } catch (error) {
-      console.error("Error adding token:", error);
+      console.error(error);
       throw new Error("AUTHENTICATION_REPOSITORY.ADD_TOKEN_FAILED");
     }
   }
@@ -30,7 +30,6 @@ class PostgresAuthenticationRepository extends AuthenticationRepository {
       const result = await this._pool.query(query);
       return result.rows.length > 0; // Returns true if token exists, false otherwise
     } catch (error) {
-      console.error("Error checking token validity:", error);
       throw new Error("AUTHENTICATION_REPOSITORY.CHECK_TOKEN_FAILED");
     }
   }
@@ -44,7 +43,6 @@ class PostgresAuthenticationRepository extends AuthenticationRepository {
     try {
       await this._pool.query(query);
     } catch (error) {
-      console.error("Error deleting token:", error);
       throw new Error("AUTHENTICATION_REPOSITORY.DELETE_TOKEN_FAILED");
     }
   }

@@ -12,17 +12,17 @@ class NewAuthentication {
 
   _verifyPayload({ id, nik, role, accessToken, refreshToken }) {
     if (!id || !nik || !role || !accessToken || !refreshToken) {
-      throw new Error("NEW_AUTHENTICATION.NOT_CONTAIN_NEEDED_PROPERTY");
+      throw new Error("NEW_AUTHENTICATION:NOT_CONTAIN_NEEDED_PROPERTY");
     }
 
     if (
-      typeof id !== "string" ||
+      typeof id !== "number" ||
       typeof nik !== "string" ||
       typeof role !== "string" ||
       typeof accessToken !== "string" ||
       typeof refreshToken !== "string"
     ) {
-      throw new Error("NEW_AUTHENTICATION.NOT_MEET_DATA_TYPE_SPECIFICATION");
+      throw new Error("NEW_AUTHENTICATION:NOT_MEET_DATA_TYPE_SPECIFICATION");
     }
   }
 }

@@ -2,14 +2,13 @@ const AuthenticationTokenManager = require("../../Applications/security/Authenti
 const InvariantError = require("../../Commons/exceptions/InvariantError");
 
 class JwtTokenManager extends AuthenticationTokenManager {
-  constructor(jwt) {
+  constructor({ jwt }) {
     super();
+    this._jwt = jwt;
 
     if (!process.env.ACCESS_TOKEN_KEY || !process.env.REFRESH_TOKEN_KEY) {
       throw new Error("JWT_TOKEN_MANAGER: MISSING_ENV_VARIABLES");
     }
-
-    this._jwt = jwt;
   }
 
   async createAccessToken(payload) {

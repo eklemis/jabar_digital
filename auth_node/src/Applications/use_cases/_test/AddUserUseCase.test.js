@@ -13,8 +13,12 @@ describe("AddUserUseCase", () => {
   });
 
   test("should successfully add a user and return the plain password", async () => {
+    const mockPasswordHash = {
+      hash: jest.fn().mockResolvedValue("hashedPassword"),
+    };
     const addUserUseCase = new AddUserUseCase({
       userRepository: mockUserRepository,
+      passwordHash: mockPasswordHash,
     });
 
     // Mock bcrypt and repository behavior

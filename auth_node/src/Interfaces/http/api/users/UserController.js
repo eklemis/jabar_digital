@@ -3,9 +3,6 @@ class UserController {
   constructor({ addUserUseCase, loginUserUseCase }) {
     this._addUserUseCase = addUserUseCase;
     this._loginUserUseCase = loginUserUseCase;
-
-    this.register = this.register.bind(this);
-    this.login = this.login.bind(this);
   }
 
   async register(req, res, next) {
@@ -21,7 +18,6 @@ class UserController {
   async login(req, res, next) {
     try {
       const { nik, password } = req.body;
-
       // Validate request payload
       if (!nik || !password) {
         throw new InvariantError("Invalid request payload");
@@ -29,6 +25,21 @@ class UserController {
 
       const user = await this._loginUserUseCase.execute({ nik, password });
       res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getPrivateClaims(req, res, next) {
+    try {
+      const userClaims = req.user; // Extracted by the middleware
+      if (!userClaims) {
+        throw new Error("Missing user claims");
+      }
+      res.status(200).json({
+        status: "success",
+        data: userClaims,
+      });
     } catch (error) {
       next(error);
     }

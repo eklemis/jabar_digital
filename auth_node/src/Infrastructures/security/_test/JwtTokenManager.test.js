@@ -18,7 +18,7 @@ describe("JwtTokenManager", () => {
   describe("Constructor", () => {
     it("should throw an error if ACCESS_TOKEN_KEY or REFRESH_TOKEN_KEY is not set", () => {
       delete process.env.ACCESS_TOKEN_KEY;
-      expect(() => new JwtTokenManager(jwt)).toThrow(
+      expect(() => new JwtTokenManager({ jwt })).toThrow(
         "JWT_TOKEN_MANAGER: MISSING_ENV_VARIABLES",
       );
 
@@ -32,7 +32,7 @@ describe("JwtTokenManager", () => {
 
   describe("createAccessToken", () => {
     it("should generate a valid access token", async () => {
-      const jwtTokenManager = new JwtTokenManager(jwt);
+      const jwtTokenManager = new JwtTokenManager({ jwt });
       const token = await jwtTokenManager.createAccessToken(mockPayload);
 
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
@@ -44,7 +44,7 @@ describe("JwtTokenManager", () => {
 
   describe("createRefreshToken", () => {
     it("should generate a valid refresh token", async () => {
-      const jwtTokenManager = new JwtTokenManager(jwt);
+      const jwtTokenManager = new JwtTokenManager({ jwt });
       const token = await jwtTokenManager.createRefreshToken(mockPayload);
 
       const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_KEY);
@@ -56,7 +56,7 @@ describe("JwtTokenManager", () => {
 
   describe("verifyRefreshToken", () => {
     it("should not throw an error if refresh token is valid", async () => {
-      const jwtTokenManager = new JwtTokenManager(jwt);
+      const jwtTokenManager = new JwtTokenManager({ jwt });
       const validToken = jwt.sign(mockPayload, process.env.REFRESH_TOKEN_KEY);
 
       await expect(
@@ -65,7 +65,7 @@ describe("JwtTokenManager", () => {
     });
 
     it("should throw InvariantError if refresh token is invalid", async () => {
-      const jwtTokenManager = new JwtTokenManager(jwt);
+      const jwtTokenManager = new JwtTokenManager({ jwt });
       const invalidToken = "invalid-token";
 
       await expect(
@@ -76,7 +76,7 @@ describe("JwtTokenManager", () => {
 
   describe("decodePayload", () => {
     it("should decode payload correctly", async () => {
-      const jwtTokenManager = new JwtTokenManager(jwt);
+      const jwtTokenManager = new JwtTokenManager({ jwt });
       const validToken = jwt.sign(mockPayload, process.env.ACCESS_TOKEN_KEY);
 
       const payload = await jwtTokenManager.decodePayload(validToken);
@@ -86,7 +86,7 @@ describe("JwtTokenManager", () => {
     });
 
     it("should throw InvariantError if token cannot be decoded", async () => {
-      const jwtTokenManager = new JwtTokenManager(jwt);
+      const jwtTokenManager = new JwtTokenManager({ jwt });
       const invalidToken = "invalid-token";
 
       await expect(jwtTokenManager.decodePayload(invalidToken)).rejects.toThrow(

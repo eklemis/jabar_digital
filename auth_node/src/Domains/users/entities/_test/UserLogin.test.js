@@ -28,7 +28,7 @@ describe("UserLogin", () => {
 
       // Act & Assert
       expect(() => new UserLogin(payload)).toThrowError(
-        "USER_LOGIN.NOT_CONTAIN_NEEDED_PROPERTY",
+        "USER_ENTITY:NOT_CONTAIN_NEEDED_PROPERTY",
       );
     });
 
@@ -41,7 +41,7 @@ describe("UserLogin", () => {
 
       // Act & Assert
       expect(() => new UserLogin(payload)).toThrowError(
-        "USER_LOGIN.NOT_MEET_DATA_TYPE_SPECIFICATION",
+        "USER_ENTITY:NOT_MEET_DATA_TYPE_SPECIFICATION",
       );
     });
   });
