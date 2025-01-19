@@ -120,8 +120,14 @@ npm start
 
 ## Try the API via Postman
 1. Ensure Postman is installed.
-2. Import the provided Postman collection.
+2. Import the provided Postman Collection and Environtment inside folder `postman`.
 3. Run the test cases to verify API functionality.
+
+To prevent your production database to being puluted with postman data, always run this project with `npm run start:dev`
+This way, the test database will be used to store the new data instead.
+
+Also make sure that the tables in the choosen database also empty so no duplicate data can prevent the postman test to be all success.
+Run this in your choosen postrges to clean up all tables `truncate users cascade;`
 
 ## Interactive Swagger OpenAPI Documentation
 Access the API documentation via the `/doc` route once the server is running.
@@ -170,6 +176,7 @@ PGPASSWORD_TEST=supersecretpassword
 PGPORT_TEST=5432
 
 ```
+You can change the `PORT` and `HOST` as as you wish if still available on your server machine.
 
 ## Troubleshooting
 - Ensure PostgreSQL is running.

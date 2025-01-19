@@ -1,0 +1,596 @@
+{
+	"info": {
+		"_postman_id": "6b2f71ca-c520-4c05-8584-7df634cd9fcd",
+		"name": "Auth API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34260916"
+	},
+	"item": [
+		{
+			"name": "Register User with Valid Payload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 201', () => {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test('Response contains user details', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"    pm.expect(jsonData).to.have.property('nik', '1234567890123456'); // Update based on test data",
+							"    pm.expect(jsonData).to.have.property('role', 'user'); // Update based on test data",
+							"    pm.expect(jsonData).to.have.property('password'); // Password should be returned",
+							"});",
+							"",
+							"// Save user details for future tests (e.g., login)",
+							"const jsonData = pm.response.json();",
+							"pm.environment.set('userId', jsonData.id);",
+							"pm.environment.set('userNIK', jsonData.nik);",
+							"pm.environment.set('userPassword', jsonData.password);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nik\": \"1234567890123456\", \"role\": \"user\"}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User with Missing Required Fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 400', () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test('Response contains error message', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('status', 'fail');",
+							"    pm.expect(jsonData).to.have.property('message', 'Missing required property'); // Update based on API's error message",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": \"user\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User with Invalid NIK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 400', () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test('Response contains error message', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('status', 'fail');",
+							"    pm.expect(jsonData).to.have.property('message', 'Invalid NIK format');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nik\": \"invalidNIK\",\n    \"role\": \"user\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User with Duplicate NIK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 400', () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test('Response contains error message', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('status', 'fail');",
+							"    pm.expect(jsonData).to.have.property('message', 'User Already Registered'); // Update based on API's error message",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nik\": \"1234567890123456\",\n    \"role\": \"user\"\n}\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Response contains user authentication details', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"    pm.expect(jsonData).to.have.property('nik', pm.environment.get('userNIK'));",
+							"    pm.expect(jsonData).to.have.property('role');",
+							"    pm.expect(jsonData).to.have.property('accessToken');",
+							"",
+							"    // Save the access token for future tests",
+							"    pm.environment.set('accessToken', jsonData.accessToken);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nik\": \"{{userNIK}}\",\n    \"password\": \"{{userPassword}}\"\n}\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User with Missing Required Fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 400', () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test('Response contains error message', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('status', 'fail');",
+							"    pm.expect(jsonData).to.have.property('message', 'Invalid request payload');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nik\": \"1234567890123456\"\n    // Missing password\n}\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User with Invalid NIK Format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 400', () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test('Response contains error message', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('status', 'fail');",
+							"    pm.expect(jsonData).to.have.property('message', 'Invalid NIK or Password');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nik\": \"invalidNIK\",\n    \"password\": \"password123\"\n}\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User with Invalid Credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 401', () => {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test('Response contains error message', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('status', 'fail');",
+							"    pm.expect(jsonData).to.have.property('message', 'Incorrect NIK or Password');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nik\": \"1234567890123456\",\n    \"password\": \"wrongpassword\"\n}\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User with Non-exist User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 401', () => {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test('Response contains error message', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('status', 'fail');",
+							"    pm.expect(jsonData).to.have.property('message', 'User Not Exist');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nik\": \"9999999999999999\",\n    \"password\": \"password123\"\n}\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Private Claims",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response contains user claims', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('success');",
+							"    pm.expect(jsonData.data).to.have.property('id');",
+							"    pm.expect(jsonData.data).to.have.property('role');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/private/claims",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"private",
+						"claims"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Private Claims with Invalid Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Response contains failure message\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"fail\");",
+							"    pm.expect(jsonData.message).to.eql(\"Invalid token\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer invalid.token.here"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/private/claims",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"private",
+						"claims"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Private Claims Without Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Response contains error message\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"fail\");",
+							"    pm.expect(jsonData.message).to.eql(\"Missing or invalid authorization header\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/private/claims",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"private",
+						"claims"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
