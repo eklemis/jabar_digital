@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14
+    container_name: auth_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    ports:
+      - "${PGPORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Use named volume to persist data
+
+  app:
+    build: .
+    container_name: auth_api
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      NODE_ENV: production
+    restart: always
+    command: sh -c "sleep 10 && npm run migrate:up && npm start"
+
+volumes:
+  pgdata: # Define the named volume here
