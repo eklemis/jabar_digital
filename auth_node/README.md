@@ -39,6 +39,7 @@ This project is a Node.js-based authentication API implementing Clean Architectu
 ├── migrations
 ├── .env
 ├── Dockerfile
+├── docker-compose.yml
 ├── package.json
 └── README.md
 ```
@@ -118,29 +119,92 @@ npm test
 npm start
 ```
 
+## Running the API with Docker
+
+### 1. Deploying with Dockerfile
+1. **Build the Docker image**
+   ```sh
+   docker build -t auth-node .
+   ```
+
+2. **Run the container**
+   ```sh
+   docker run -p 3000:3000 --env-file .env auth-node
+   ```
+
+### 2. Deploying with Docker Compose
+1. **Create the Docker Compose file `docker-compose.yml`**
+   ```yaml
+   version: '3.8'
+
+   services:
+     db:
+       image: postgres:14
+       container_name: auth_postgres
+       restart: always
+       environment:
+         POSTGRES_USER: ${PGUSER}
+         POSTGRES_PASSWORD: ${PGPASSWORD}
+         POSTGRES_DB: ${PGDATABASE}
+       ports:
+         - "${PGPORT}:5432"
+       volumes:
+         - pgdata:/var/lib/postgresql/data
+
+     app:
+       build: .
+       container_name: auth_api
+       depends_on:
+         - db
+       env_file:
+         - .env
+       ports:
+         - "${PORT}:${PORT}"
+       environment:
+         NODE_ENV: production
+       restart: always
+       command: sh -c "sleep 10 && npm run migrate up && npm start"
+
+   volumes:
+     pgdata:
+   ```
+
+2. **Start the services**
+   ```sh
+   docker-compose up --build -d
+   ```
+
+3. **Stop the services**
+   ```sh
+   docker-compose down
+   ```
+
+4. **Check running containers**
+   ```sh
+   docker ps
+   ```
+
+5. **View logs**
+   ```sh
+   docker-compose logs -f
+   ```
+
 ## Try the API via Postman
 1. Ensure Postman is installed.
-2. Import the provided Postman Collection and Environtment inside folder `postman`.
+2. Import the provided Postman Collection and Environment inside folder `postman`.
 3. Run the test cases to verify API functionality.
 
-To prevent your production database to being puluted with postman data, always run this project with `npm run start:dev`
+To prevent your production database from being polluted with Postman data, always run this project with `npm run start:dev`
 This way, the test database will be used to store the new data instead.
 
-Also make sure that the tables in the choosen database also empty so no duplicate data can prevent the postman test to be all success.
-Run this in your choosen postrges to clean up all tables `truncate users cascade;`
+Also, make sure that the tables in the chosen database are empty to prevent duplicate data from affecting the tests.
+Run this in your chosen PostgreSQL instance to clean up all tables:
+```sql
+TRUNCATE users CASCADE;
+```
 
 ## Interactive Swagger OpenAPI Documentation
 Access the API documentation via the `/doc` route once the server is running.
-
-## Running the API with Docker
-1. Build the Docker image:
-   ```
-   docker build -t auth-node .
-   ```
-2. Run the container:
-   ```
-   docker run -p 3000:3000 auth-node
-   ```
 
 ## API Endpoints
 | Method | Endpoint               | Description               |
@@ -151,6 +215,7 @@ Access the API documentation via the `/doc` route once the server is running.
 
 ## Environment Variables
 Set up a `.env` file in the root directory with the following variables:
+
 ```
 # HTTP SERVER
 HOST=localhost
@@ -174,14 +239,11 @@ PGUSER_TEST=developer
 PGDATABASE_TEST=user-auth_test
 PGPASSWORD_TEST=supersecretpassword
 PGPORT_TEST=5432
-
 ```
-You can change the `PORT` and `HOST` as as you wish if still available on your server machine.
+
+You can change the `PORT` and `HOST` as you wish if still available on your server machine.
 
 ## Troubleshooting
 - Ensure PostgreSQL is running.
 - Check `.env` variables are correctly set.
 - Review logs in case of errors: `npm run start:dev`.
-
-## License
-This project is licensed under the MIT License.
