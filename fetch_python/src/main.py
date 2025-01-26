@@ -1,9 +1,11 @@
-from fastapi import FastAPI, Depends, HTTPException, Security
+from fastapi import FastAPI, Depends, HTTPException, Security, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, OAuth2PasswordBearer
+from typing import Dict, Any
 from dotenv import load_dotenv
 import os
 import jwt
 from collections import defaultdict
+from pydantic import BaseModel
 
 from src.applications.use_cases.fetch_products_usecase import FetchProductsUseCase
 from src.infrastructures.product_repository import ProductRepository
@@ -82,3 +84,23 @@ async def get_aggregated_products(user: User = Depends(get_current_user), usecas
     sorted_products = sorted(aggregated_products, key=lambda x: x["price"])
 
     return {"status": "success", "data": sorted_products}
+
+# Define response model
+class PrivateClaimsResponse(BaseModel):
+    status: str
+    data: Dict[str, Any]
+
+@app.get("/users/private/claims", response_model=PrivateClaimsResponse)
+async def get_private_claims(token: dict = Depends(verify_token)):
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return {"status":"success","data":{
+        "id": token.get("id"),
+        "nik": token.get("nik"),
+        "role": token.get("role"),
+    }}
