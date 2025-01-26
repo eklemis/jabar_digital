@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, Security
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, OAuth2PasswordBearer
 from dotenv import load_dotenv
 import os
 import jwt
@@ -8,6 +8,7 @@ from collections import defaultdict
 from src.applications.use_cases.fetch_products_usecase import FetchProductsUseCase
 from src.infrastructures.product_repository import ProductRepository
 from src.infrastructures.exchange_rate_repository import ExchangeRateRepository
+from src.domains.user import User
 
 # Load environment variables from .env file
 load_dotenv()
@@ -28,10 +29,25 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Security(security))
         decoded_token = jwt.decode(token, ACCESS_TOKEN_KEY, algorithms=["HS256"])
         return decoded_token
     except jwt.ExpiredSignatureError:
-        print("Token has expired")
         raise HTTPException(status_code=401, detail="Token has expired")
     except jwt.InvalidTokenError:
-        print("Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
+    try:
+        decoded_token = jwt.decode(token, ACCESS_TOKEN_KEY, algorithms=["HS256"])
+
+        # Check if the role is admin
+        if decoded_token.get("role") != "admin":
+            raise HTTPException(status_code=403, detail="Forbidden: Insufficient permissions")
+
+        return User(**decoded_token)
+
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
 
@@ -47,7 +63,7 @@ async def get_products(usecase: FetchProductsUseCase = Depends(get_product_useca
 
 
 @app.get("/aggregated-products")
-async def get_aggregated_products(usecase: FetchProductsUseCase = Depends(get_product_usecase), token: dict = Depends(verify_token)):
+async def get_aggregated_products(user: User = Depends(get_current_user), usecase: FetchProductsUseCase = Depends(get_product_usecase), token: dict = Depends(verify_token)):
     products = await usecase.execute()
 
     # Aggregation logic: Summing product prices within the same department and product

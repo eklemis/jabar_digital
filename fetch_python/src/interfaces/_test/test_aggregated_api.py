@@ -1,11 +1,30 @@
 import pytest
 from fastapi.testclient import TestClient
+import os
+import jwt
+from datetime import datetime, timedelta
+
 from src.main import app
 from src.domains.product import Product
 from unittest.mock import AsyncMock, patch
 from src.domains.exchange_rate import ExchangeRate
 
+
+
 client = TestClient(app)
+
+# Function to generate a mock valid JWT token
+def generate_mock_jwt():
+    payload = {
+        "id": 1,
+        "nik": "1234567890123456",
+        "role": "admin",
+        "exp": datetime.utcnow() + timedelta(hours=1),  # Token valid for 1 hour
+        "iat": datetime.utcnow()
+    }
+    secret_key = os.getenv("ACCESS_TOKEN_KEY", "your_secret_key_here")
+    token = jwt.encode(payload, secret_key, algorithm="HS256")
+    return token
 
 @pytest.mark.asyncio
 async def test_get_aggregated_products(mocker):
@@ -22,8 +41,12 @@ async def test_get_aggregated_products(mocker):
     ]
     mock_exchange_repo.return_value.fetch_exchange_rate.return_value = ExchangeRate(currency="IDR", value=15000.0)
 
+    # Generate a mock JWT token
+    token = generate_mock_jwt()
+    headers = {"Authorization": f"Bearer {token}"}
+
     # Call the endpoint
-    response = client.get("/aggregated-products")
+    response = client.get("/aggregated-products", headers=headers)
 
     # Assertions
     assert response.status_code == 200
