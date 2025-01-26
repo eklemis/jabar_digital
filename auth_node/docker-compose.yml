@@ -19,12 +19,20 @@ services:
     container_name: auth_api
     depends_on:
       - db
-    env_file:
-      - .env
     ports:
       - "${PORT}:${PORT}"
     environment:
       NODE_ENV: production
+      HOST: ${HOST}
+      PORT: ${PORT}
+      PGHOST: ${PGHOST}
+      PGUSER: ${PGUSER}
+      PGDATABASE: ${PGDATABASE}
+      PGPASSWORD: ${PGPASSWORD}
+      PGPORT: ${PGPORT}
+      ACCESS_TOKEN_KEY: ${ACCESS_TOKEN_KEY}
+      REFRESH_TOKEN_KEY: ${REFRESH_TOKEN_KEY}
+      ACCCESS_TOKEN_AGE: ${ACCCESS_TOKEN_AGE}
     restart: always
     command: sh -c "sleep 10 && npm run migrate:up && npm start"
 

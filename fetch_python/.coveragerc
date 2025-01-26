@@ -1,0 +1,4 @@
+[run]
+omit =
+    src/interfaces/product_repository_interface.py
+    src/interfaces/exchange_rate_repository_interface.py
