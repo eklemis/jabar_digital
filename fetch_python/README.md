@@ -44,9 +44,8 @@ The **Product API** is a web-based service built with **FastAPI**, designed to f
 
 ## Installation
 
-1. Clone the repository:
+1. Change active directory:
    ```sh
-   git clone https://github.com/your-repo/fetch_python.git
    cd fetch_python
    ```
 2. Create and activate a virtual environment:
@@ -147,6 +146,26 @@ Authorization: Bearer <your_jwt_token>
         {"department": "Sports", "product": "Bike", "price": 4500000.00},
         {"department": "Toys", "product": "Car", "price": 3000000.00}
     ]
+}
+```
+
+### `GET /users/private/claims`
+Retrieves private claim data for the authenticated user.
+
+#### Request Headers
+```
+Authorization: Bearer <your_jwt_token>
+```
+
+#### Response Example
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 5,
+        "nik": "1234567890123456",
+        "role": "user"
+    }
 }
 ```
 

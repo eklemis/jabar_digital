@@ -93,29 +93,33 @@ ALTER DATABASE "user-auth" OWNER TO developer;
 ALTER DATABASE "user-auth_test" OWNER TO developer;
 ```
 
-## Install dependencies
+## Change active directory:
+```sh
+cd auth_node
 ```
+## Install dependencies
+```sh
 npm install
 ```
 
 ## Migrate Postgres Database
 ### Run migration for production database
-```
+```sh
 npm run migrate up
 ```
 
 ### Run migration for test database
-```
+```sh
 npm run migrate:test up
 ```
 
 ## Run All Tests
-```
+```sh
 npm test
 ```
 
 ## Run Application
-```
+```sh
 npm start
 ```
 
